@@ -1,0 +1,9 @@
+ul.pagination {
+    list-style-type:none;
+    text-align:  center;
+}
+ul.pagination  li {
+    display: inline;
+    margin-left: 10px;
+    
+}
