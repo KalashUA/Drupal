@@ -11,7 +11,7 @@ class A {
 	public function __construct ($id, $title, $full_desc, $timestamp,$short_desc) {
 		$this->id = $id;
 		$this->title = $title;
-		$this->full_desk = $full_desc;
+		$this->full_desc = $full_desc;
 		$this->timestamp = $timestamp;
 		$this->short_desc= $short_desc;
 	}
@@ -79,7 +79,7 @@ class A {
 
 }
 	public function edit(){
-	self::select();
+	require('base/db.php');
 	if (isset($_POST['submit'])) {
 
   try {
@@ -135,9 +135,9 @@ class A {
             exit;
         }
 	}
+	public function index() {
+/*
+	хотів зробити метод для виводу головної сторінки, але починаються проблеми з пагінатором, треба якийсь інший код
+*/
 }
-
-
-$obj=A::select();
-print $obj->title;
-
+}

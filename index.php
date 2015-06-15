@@ -105,8 +105,5 @@ try {
   </div>
 
 </div>
-
-<?php
-// Підключаємо футер сайту.
-require('base/footer.php');
-?>
+<!-- Підключаємо футер сайту.-->
+<?php require('base/footer.php'); ?>

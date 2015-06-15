@@ -12,50 +12,9 @@ if (!$editor) {
   require('base/footer.php');
   exit;
 }
-
-// Підключення БД, адже нам необхідне підключення для створення статті.
-require('base/db.php');
-
-// Якщо ми отримали дані з ПОСТа, тоді обробляємо їх та вставляємо.
-if (isset($_POST['submit'])) {
-
-  try {
-    $stmt = $conn->prepare('INSERT INTO content VALUES(NULL, :title, :short_desc, :full_desc, :timestamp)');
-
-    // Обрізаємо усі теги у загловку.
-    $stmt->bindParam(':title', strip_tags($_POST['title']));
-
-    // Екрануємо теги у полях короткого та повного опису.
-    $stmt->bindParam(':short_desc', htmlspecialchars($_POST['short_desc']));
-    $stmt->bindParam(':full_desc', htmlspecialchars($_POST['full_desc']));
-
-    // Беремо дату та час, переводимо у UNIX час.
-    $date = "{$_POST['date']}  {$_POST['time']}";
-    $stmt->bindParam(':timestamp', strtotime($date));
-    // Виконуємо запит, результат запиту знаходиться у змінні $status.
-    // Якщо $status рівне TRUE, тоді запит відбувся успішно.
-    $status = $stmt->execute();
-
-  } catch(PDOException $e) {
-    // Виводимо на екран помилку.
-    print "ERROR: {$e->getMessage()}";
-    // Закриваємо футер.
-    require('base/footer.php');
-    // Зупиняємо роботу скрипта.
-    exit;
-  }
-
-  // При успішному запиту перенаправляємо користувача на сторінку перегляду статті.
-  if ($status) {
-    // За допомогою методу lastInsertId() ми маємо змогу отрмати ІД статті, що була вставлена.
-    header("Location: article.php?id={$conn->lastInsertId()}");
-    exit;
-  }
-  else {
-    // Вивід повідомлення про невдале додавання матеріалу.
-    print "Запис не був доданий.";
-  }
-}
+require ('articleobj.php');
+A::add();
+  
 ?>
 <!-- Пишемо форму, метод ПОСТ, форма відправляє данні на цей же скрипт. -->
 <form action="<?php print $_SERVER["PHP_SELF"]; ?>" method="POST">
