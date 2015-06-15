@@ -120,13 +120,13 @@ class A {
   }
 }
 	}
-	public function delete () {
+	public function delete ($param) {
 	require('base/db.php');
-		if (isset($_GET['id'])) 
+		if (isset($param)) 
 
         try {
             $stmt = $conn->prepare('DELETE FROM content WHERE id= :id');
-            $stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT);	
+            $stmt->bindParam(':id', $param, PDO::PARAM_INT);	
             $stmt->execute();
         } 
         catch(PDOException $e) {
